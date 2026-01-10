@@ -10,4 +10,6 @@ dependencies = [
     "langchain>=1.2.3",
     "langchain-groq>=1.1.1",
     "langchain-openai>=1.1.7",
+    "python-dotenv>=1.2.1",
+    "tavily>=1.1.0",
 ]
