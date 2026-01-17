@@ -3,6 +3,7 @@ name = "ml-project"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
+authors = [{ name = "Usman Mushtaq", email = "usmanmushtaq__@gmail.com"}]
 requires-python = ">=3.12"
 dependencies = [
     "deepagents>=0.3.5",
@@ -12,4 +13,21 @@ dependencies = [
     "langchain-openai>=1.1.7",
     "python-dotenv>=1.2.1",
     "tavily>=1.1.0",
+    "pandas",
+    "numpy",
+    "scikit-learn",
+    "pydantic",
 ]
+
+[tool.uv]
+dev-dependencies = [
+"pytest",
+"ruff",
+]
+
+[project.scripts]
+python-ci = "python_ci:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

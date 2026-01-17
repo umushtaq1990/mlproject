@@ -1,5 +1,8 @@
+# import pipeline and run here
+from poc.src.classification.pipeline import run
+
 def main():
-    print("Hello from ml-project!")
+    run()
 
 
 if __name__ == "__main__":

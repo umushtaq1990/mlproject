@@ -5,3 +5,4 @@ langchain-groq
 ipykernel
 python-dotenv
 tavily
+pydantic
