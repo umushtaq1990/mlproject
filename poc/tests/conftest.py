@@ -4,6 +4,7 @@ Ensure the project root is on sys.path so tests can import the package
 using its package name (e.g. `poc.src...`). This mirrors how CI/dev
 environments work when the project is installed or run from the repo root.
 """
+
 from __future__ import annotations
 
 import sys
