@@ -2,27 +2,27 @@ name: Python CI Check
 on: [push]
 jobs:
   lock_file:
-    runs-on: ubuntau-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
       - run: uv lock --locked 
   linting:
-    runs-on: ubuntau-latest
+    runs-on: ubuntu-latest
     needs: [lock_file]
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
       - run: uvx ruff check .
   formatting:
-    runs-on: ubuntau-latest
+    runs-on: ubuntu-latest
     needs: [lock_file]
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
       - run: uvx ruff format --check .
   type_consistency:
-    runs-on: ubuntau-latest
+    runs-on: ubuntu-latest
     needs: [lock_file]
     steps:
       - uses: actions/checkout@v4
@@ -33,14 +33,14 @@ jobs:
         with:
           token: ${{ secrets.CODE_COV_TOKEN }}
   tests:
-    runs-on: ubuntau-latest
+    runs-on: ubuntu-latest
     needs: [lock_file]
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
       - run: uv run pytest -v --durations=0 --cov --cov-report=xml
   build:
-    runs-on: ubuntau-latest
+    runs-on: ubuntu-latest
     needs: [linting, formatting, type_consistency, tests]
     steps:
       - uses: actions/checkout@v4
