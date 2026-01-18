@@ -1,5 +1,6 @@
 # import pipeline and run here
 import logging
+from typing import TextIO
 import io
 import sys
 from flask import Flask, jsonify, render_template_string
@@ -7,8 +8,7 @@ from poc.src.classification.pipeline import run
 
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
 
@@ -18,10 +18,10 @@ app = Flask(__name__)
 pipeline_output = []
 
 
-@app.route('/', methods=['GET'])
+@app.route("/", methods=["GET"])
 def home():
     """Home page with Hello World and output display"""
-    html_template = '''
+    html_template = """
     <!DOCTYPE html>
     <html>
     <head>
@@ -82,43 +82,56 @@ def home():
         </script>
     </body>
     </html>
-    '''
+    """
     return render_template_string(html_template)
 
 
-@app.route('/run-pipeline', methods=['POST'])
+@app.route("/run-pipeline", methods=["POST"])
 def run_pipeline():
     """Run the classification pipeline and capture output"""
+    old_stdout: TextIO | None = None
+    output_capture = io.StringIO()
+
     try:
         logger.info("Starting pipeline execution...")
-        
-        # Capture stdout
-        output_capture = io.StringIO()
+
         old_stdout = sys.stdout
         sys.stdout = output_capture
-        
+
         run()
-        
-        # Restore stdout
-        sys.stdout = old_stdout
+
         captured_output = output_capture.getvalue()
-        
+
         logger.info("Pipeline execution completed successfully!")
-        return jsonify({
-            "status": "success",
-            "message": "Pipeline executed successfully",
-            "output": captured_output
-        }), 200
+        return (
+            jsonify(
+                {
+                    "status": "success",
+                    "message": "Pipeline executed successfully",
+                    "output": captured_output,
+                }
+            ),
+            200,
+        )
+
     except Exception as e:
-        sys.stdout = old_stdout
-        logger.error(f"Pipeline execution failed: {str(e)}", exc_info=True)
-        return jsonify({
-            "status": "error",
-            "message": str(e),
-            "output": ""
-        }), 500
+        logger.error("Pipeline execution failed", exc_info=True)
+        return (
+            jsonify(
+                {
+                    "status": "error",
+                    "message": str(e),
+                    "output": "",
+                }
+            ),
+            500,
+        )
+
+    finally:
+        if old_stdout is not None:
+            sys.stdout = old_stdout
 
 
 if __name__ == "__main__":
     logger.info("Starting Flask API server...")
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(host="0.0.0.0", port=5000, debug=False)

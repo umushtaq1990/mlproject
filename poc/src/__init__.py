@@ -7,8 +7,5 @@ import-time side effects. Prefer importing subpackages explicitly, e.g.
 
 Public symbols are intentionally small so importing ``poc.src`` is cheap.
 """
-
-__all__ = ["classification"]
-
 # package version (update as needed)
 __version__ = "0.1.0"
