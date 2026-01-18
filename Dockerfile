@@ -12,6 +12,11 @@ RUN pip install --no-cache-dir uv
 # Copy dependency files first for layer caching
 COPY pyproject.toml uv.lock ./
 
+# Some build backends require the README referenced in pyproject.toml to exist
+# (hatchling validates the readme during editable builds). Copy it before
+# running `uv sync --frozen` so the build step can find the file.
+COPY README.md ./
+
 # Install dependencies from uv.lock (frozen ensures pinned)
 RUN uv sync --frozen
 
