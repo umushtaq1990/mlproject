@@ -25,7 +25,7 @@ COPY poc ./poc
 COPY poc/data ./data
 
 # If you have other scripts or entry points, copy those too
-# COPY main.py ./
+COPY main.py ./
 
-# Run the pipeline as a module (this expects `poc` to be on PYTHONPATH)
-CMD ["python", "-m", "poc.src.classification.pipeline"]
+# Run main.py as the entry point
+CMD ["python", "main.py"]
