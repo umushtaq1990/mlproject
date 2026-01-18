@@ -17,7 +17,7 @@ RUN uv sync --frozen
 
 # Copy application code (only the package and any data)
 COPY poc ./poc
-COPY data ./data
+COPY poc/data ./data
 
 # If you have other scripts or entry points, copy those too
 # COPY main.py ./
