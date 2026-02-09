@@ -8,14 +8,14 @@ Public API:
 - run: top-level pipeline runner
 """
 
-from .config import Config
+from .config import AppConfig
 from .data import load_data, preprocess, split
 from .model import train_model
 from .evaluate import evaluate
 from .pipeline import run
 
 __all__ = [
-    "Config",
+    "AppConfig",
     "load_data",
     "preprocess",
     "split",

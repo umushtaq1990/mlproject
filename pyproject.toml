@@ -18,6 +18,9 @@ dependencies = [
     "scikit-learn",
     "pydantic",
     "flask",
+    "seaborn>=0.13.2",
+    "mlflow>=3.8.1",
+    "openpyxl>=3.1.5",
 ]
 
 [tool.uv]

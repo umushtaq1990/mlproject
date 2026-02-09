@@ -9,3 +9,8 @@ wheels/
 # Virtual environments
 .venv
 .env
+mlruns/
+plots/
+data/
+mlflow.db
+*.png

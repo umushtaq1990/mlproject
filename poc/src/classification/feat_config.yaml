@@ -1,0 +1,64 @@
+numeric_features:
+  Age:
+    handle_nans: "mean"
+    fill_value: null
+    outlier_treatment: true
+    scaling: "standard"
+
+  Siblings_Spouse:
+    handle_nans: "median"
+    fill_value: null
+    outlier_treatment: false
+    scaling: "minmax"
+
+  Parents_Children:
+    handle_nans: "median"
+    fill_value: null
+    outlier_treatment: false
+    scaling: "minmax"
+
+  Fare:
+    handle_nans: "median"
+    fill_value: null
+    outlier_treatment: true
+    scaling: "minmax"
+
+categorical_features:
+  Pclass:
+    handle_nans: "mode"
+    fill_value: null
+    encoding: "label"
+
+  Sex:
+    handle_nans: "mode"
+    fill_value: null
+    encoding: "onehot"
+
+  Name:
+    handle_nans: "mode"
+    fill_value: "Unknown"
+    encoding: "none"
+
+conversion_features:
+  groupby_combinations:
+    - columns: ["Pclass", "Sex"]
+      n_bins: 3
+      labels: ["Low", "Medium", "High"]
+      outlier_treatment: false
+      scaling: "none"
+    - columns: ["Pclass"]
+      n_bins: 3
+      labels: ["Low", "Medium", "High"]
+      outlier_treatment: false
+      scaling: "none"
+  numeric_col:
+    - column: "Age"
+      n_bins: 3
+      labels: ["Young", "Middle", "Senior"]
+      outlier_treatment: false
+      scaling: "none"
+    - column: "Fare"
+      n_bins: 3
+      labels: ["Low", "Medium", "High"]
+      outlier_treatment: false
+      scaling: "none"

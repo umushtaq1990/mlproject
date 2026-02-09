@@ -1,0 +1,50 @@
+data:
+  raw_path: "{output_dir}/titanic.csv"
+  train_path: "{output_dir}/train-data/train.parquet"
+  test_path: "{output_dir}/test-data/test.parquet"
+  validation_path: "{output_dir}/validation-data/validation.parquet"
+  processed_path: "{output_dir}/processed.parquet"
+  output_dir: "poc/data"
+  feat_config_path: "poc/src/classification/feat_config.yaml"
+processing:
+  raw_columns:
+    - "Survived"
+    - "Pclass"
+    - "Name"
+    - "Sex"
+    - "Age"
+    - "Siblings/Spouses Aboard"
+    - "Parents/Children Aboard"
+    - "Fare"
+  rename_columns:
+    "Siblings/Spouses Aboard": "Siblings_Spouse"
+    "Parents/Children Aboard": "Parents_Children"
+  drop_columns:
+    - "C"
+  numeric_cols:
+    - "Age"
+    - "Siblings_Spouse"
+    - "Parents_Childern"
+  categorical_cols:
+    - "Pclass"
+    - "Sex"
+  test_size: 0.3
+  random_state: 42
+
+# Modeling and MLflow parameters
+modeling:
+  use_gridsearch: false
+  target: "Survived"
+  positive_label: 1
+  negative_label: 0
+  model:
+    params:
+      #use_label_encoder: false
+      #eval_metric: "logloss"
+      random_state: 42
+    hyperparameters:
+      n_estimators: 200
+      max_depth: 3
+      learning_rate: 0.05
+mlflow:
+  experiment_name: "Classification"
